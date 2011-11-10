@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" 
+		 xmlns:view="view.*">
+	<mx:Script>
+		<![CDATA[
+			import mx.events.ListEvent;
+			
+			private function itemClickHandler(event:ListEvent):void
+			{
+				var item:Object = event.itemRenderer.data;
+				selectedIndex = int( item.@data );
+			}
+			
+			[Bindable]
+			private var selectedIndex:int;
+					
+		]]>
+	</mx:Script>
+	
+	<mx:XML id="nav">
+		<node>
+			<node label="Flex SDK 日志框架" data="0"/>
+			<node label="自定义组件" data="1"/>
+			<node label="Ascorelib日志框架" data="2"/>
+			<node label="我的日志" data="3"/>
+		</node>
+	</mx:XML>
+	
+	<mx:HBox width="100%" height="100%">
+		<mx:Tree styleName="mytree" width="180" labelField="@label" showRoot="false" dataProvider="{nav}" 
+				 itemClick="itemClickHandler(event)" height="100%" fontSize="14"/>
+		<mx:ViewStack width="100%" height="100%" selectedIndex="{selectedIndex}"  >
+			<view:FrameworkLogView/>
+			<view:ComponentView/>
+			<view:CorelibView/>
+			<view:MyLogView/>
+		</mx:ViewStack>
+	</mx:HBox>
+</mx:HBox>

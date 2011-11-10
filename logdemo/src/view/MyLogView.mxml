@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" preinitialize="logLifeCycleEvent(event)"
+		 initialize="logLifeCycleEvent(event)" creationComplete="logLifeCycleEvent(event)" updateComplete="logLifeCycleEvent(event)"
+		 addedToStage="logLifeCycleEvent(event)" activate="logLifeCycleEvent(event)" added="logLifeCycleEvent(event)"
+		 childAdd="logLifeCycleEvent(event)" dataChange="logLifeCycleEvent(event)" removed="logLifeCycleEvent(event)"
+		 render="logLifeCycleEvent(event)" resize="logLifeCycleEvent(event)">
+	<mx:Script>
+		<![CDATA[
+			import com.gemantic.libs.core.logging.Logger;
+			
+			import mx.events.FlexEvent;
+			
+			[Bindable]
+			protected var logContent:String;
+					
+			private function logLifeCycleEvent(e:Event):void 
+			{				
+				var logger:Logger = Logger.getLogger("我的日志");
+				logger.info("LifeCycleEvent: {0}:{1}",e.target,e.type);
+			}
+			
+			protected function showLog():void			
+			{
+				var logFilePath:String = File.applicationStorageDirectory.resolvePath( "Logs\\" + new Date().toLocaleDateString() + ".log" ).nativePath;
+				var file:File = new File(logFilePath);
+				if(	file.exists)
+				{
+					var loader:URLLoader = new URLLoader();
+					loader.addEventListener(Event.COMPLETE,fileLoadCompleteHandler);
+					loader.load(new URLRequest(logFilePath));
+				}
+			}
+			
+			private function fileLoadCompleteHandler(event:Event):void
+			{
+				logContent = String(event.currentTarget.data);
+			}
+			
+			protected function clearLog():void
+			{
+				Logger.clear();
+				logContent = "";
+			}
+		]]>
+	</mx:Script>
+	
+	
+	<mx:Panel width="100%" height="100%" title="AScorelib Log Demo">
+		<mx:TextArea width="100%" height="100%" editable="false" text="{logContent}"/>
+
+		<mx:ControlBar>
+			<mx:Button label="show log" click="showLog()"/>
+			<mx:Button label="clear log" click="clearLog()"/>
+		</mx:ControlBar>
+	</mx:Panel> 
+</mx:VBox>

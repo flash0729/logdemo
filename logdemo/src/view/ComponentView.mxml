@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" preinitialize="initLogging()" xmlns:view="view.*">
+	
+	<mx:Script><![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.logging.targets.*;
+		import mx.logging.*;
+		
+		[Bindable]
+		public var myData:ArrayCollection;
+		
+		private function initLogging():void 
+		{
+			var logTarget:TraceTarget = new TraceTarget();
+			
+			logTarget.filters=["view.MyButton"];
+			//logTarget.filters=["*"];
+			
+			logTarget.level = LogEventLevel.ALL;
+			
+			logTarget.includeDate = true;
+			logTarget.includeTime = true;
+			logTarget.includeCategory = true;
+			logTarget.includeLevel = true;
+			
+			Log.addTarget(logTarget);
+		}
+	]]></mx:Script>
+	
+	<view:MyButton/>
+</mx:VBox>

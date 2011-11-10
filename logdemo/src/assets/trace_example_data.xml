@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<result>
+		<month>
+			1
+		</month>	
+		<apple>
+			45
+		</apple>
+		<orange>
+			25
+		</orange>
+		<banana>
+			30
+		</banana>
+	</result>
+	<result>
+		<month>
+			2
+		</month>	
+		<apple>
+			60
+		</apple>
+		<orange>
+			70
+		</orange>
+		<banana>
+			33
+		</banana>		
+	</result>
+	<result>
+		<month>
+			3
+		</month>	
+		<apple>
+			82
+		</apple>
+		<orange>
+			91
+		</orange>
+		<banana>
+			78
+		</banana>
+	</result>
+</data>
+			
+			

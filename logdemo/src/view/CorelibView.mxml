@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<view:CorelibLog xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:view="view.*" width="100%" height="100%" creationComplete="initLogging()">
+	<mx:HTTPService id="srv" result=" srv_ResultHandler(event);" url="/assets/trace_example_data.xml" useProxy="false"/>
+	
+	<mx:Panel width="100%" height="100%" title="AScorelib Log Demo">
+		<mx:VDividedBox width="100%" height="100%">
+			<mx:LineChart id="chart" width="100%" height="100%" dataProvider="{myData}" showDataTips="true">
+				<mx:horizontalAxis>
+					<mx:CategoryAxis categoryField="month"/>
+				</mx:horizontalAxis>
+				
+				<mx:series>
+					<mx:LineSeries name="Apple" yField="apple"/>	
+					<mx:LineSeries name="Orange" yField="orange"/>
+					<mx:LineSeries name="Banana" yField="banana"/>
+				</mx:series>
+			</mx:LineChart>
+			
+			<mx:TextArea width="100%" height="100%" editable="false" text="{logContent}"/>
+		</mx:VDividedBox>
+		
+		<mx:ControlBar>
+			<mx:Button id="b1" label="Load Data" click="srv.send();"/>
+			<mx:Button label="show log" click="showLog()"/>
+			<mx:Button label="clear log" click="clearLog()"/>
+			<mx:Label id="logFileURI" text="log file uri:{fileTarget.logURI}"/>
+		</mx:ControlBar>
+	</mx:Panel> 
+</view:CorelibLog>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" xmlns:view="view.*" creationComplete="creationCompleteHandler(event)">
+	<mx:Script>
+		<![CDATA[
+			import com.gemantic.libs.core.logging.Logger;
+			
+			import mx.events.FlexEvent;
+			
+			import view.StageView;
+			
+
+			
+			private function loadConfigCompleteHandler(e:Event):void
+			{
+				var loader:URLLoader = e.target as URLLoader;
+				var xml:XML = XML(loader.data);
+				var child:XML = xml.item[0];
+				var res:String = child.LogLevel;
+				
+				if ( !isNaN(parseInt(res)) )
+				{
+					Logger.clear();
+					Logger.level = parseInt(res);
+				}
+				
+				addChildAt( new StageView() , 0 );
+			}
+					
+			protected function creationCompleteHandler(event:FlexEvent):void
+			{	
+				var request:URLRequest = new URLRequest("/config/config.xml");
+				var urlLoader:URLLoader = new URLLoader();
+				urlLoader.addEventListener(Event.COMPLETE,loadConfigCompleteHandler);
+				urlLoader.load(request);
+			}
+			
+		]]>
+	</mx:Script>
+
+</mx:WindowedApplication>

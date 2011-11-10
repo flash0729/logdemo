@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:VBox xmlns:mx="http://www.adobe.com/2006/mxml" width="100%" height="100%" creationComplete="initLogging()">
+	
+	<mx:Script><![CDATA[
+		import mx.collections.ArrayCollection;
+		import mx.logging.targets.*;
+		import mx.logging.*;
+		
+		[Bindable]
+		public var myData:ArrayCollection;
+		
+		private function initLogging():void 
+		{
+			// Create a target.
+			var logTarget:TraceTarget = new TraceTarget();
+			
+			// Log only messages for the classes in the mx.rpc.* and 
+			// mx.messaging packages.
+			logTarget.filters=["mx.rpc.*","mx.messaging.*"];
+			
+			// Log all log levels.
+			logTarget.level = LogEventLevel.ALL;
+			
+			// Add date, time, category, and log level to the output.
+			logTarget.includeDate = true;
+			logTarget.includeTime = true;
+			logTarget.includeCategory = true;
+			logTarget.includeLevel = true;
+			
+			// Begin logging.
+			Log.addTarget(logTarget);
+		}
+	]]></mx:Script>
+	
+	<mx:HTTPService id="srv" url="/assets/trace_example_data.xml" useProxy="false" result="myData=ArrayCollection(srv.lastResult.data.result)"/>
+	
+	<mx:LineChart id="chart" dataProvider="{myData}" showDataTips="true">
+		<mx:horizontalAxis>
+			<mx:CategoryAxis categoryField="month"/>
+		</mx:horizontalAxis>
+		<mx:series>
+			<mx:LineSeries yField="apple" name="Apple"/>
+			<mx:LineSeries yField="orange" name="Orange"/>
+			<mx:LineSeries yField="banana" name="Banana"/>
+		</mx:series>
+	</mx:LineChart>
+	
+	<mx:Button id="b1" click="srv.send();" label="Load Data"/>
+</mx:VBox>
