@@ -14,7 +14,7 @@
 			var logTarget:TraceTarget = new TraceTarget();
 			
 			logTarget.filters=["view.MyButton"];
-			//logTarget.filters=["*"];;;
+			//logTarget.filters=["*"];
 			
 			logTarget.level = LogEventLevel.ALL;
 			
